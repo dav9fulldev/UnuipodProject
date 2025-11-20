@@ -742,10 +742,10 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ## 👨‍💻 Équipe
 
 ### Développeur Principal
-**[Votre Nom]** - Développeur Fullstack
-- 🐙 GitHub: [@votre-username](https://github.com/votre-username)
-- 💼 LinkedIn: [Votre Profil](https://linkedin.com/in/votre-profil)
-- 📧 Email: votre.email@example.com
+**YAO BROU DAVID** - Développeur Fullstack
+- 🐙 GitHub: dav9fulldev (https://github.com/dav9fulldev)
+- 💼 LinkedIn: Brou David YAO (https://www.linkedin.com/in/brou-david-yao)
+- 📧 Email: broudavid505@gmail.com
 - 🌐 Portfolio: [votre-site.com](https://votre-site.com)
 
 ### Contributeurs
@@ -772,7 +772,7 @@ Merci à tous ceux qui ont contribué ! 🙏
 - 💬 **Discord Communauté** : [Rejoindre](https://discord.gg/gertonargent)
 - 🐛 **Signaler un Bug** : [GitHub Issues](https://github.com/votre-username/gertonargent-v2/issues)
 - 💡 **Proposer une Fonctionnalité** : [Discussions](https://github.com/votre-username/gertonargent-v2/discussions)
-- 📱 **WhatsApp** : +225 XX XX XX XX XX
+- 📱 **WhatsApp** : +225 0799053977
 - 🐦 **Twitter** : [@gertonargent](https://twitter.com/gertonargent)
 
 ### FAQ
@@ -839,9 +839,9 @@ Permettre à chaque africain de prendre le contrôle de ses finances grâce à u
 ## 🏆 Reconnaissance
 
 **GèrTonArgent a été reconnu par :**
-- 🥇 Hackathon FinTech Abidjan 2024
+- 🥇 Hackathon FinTech Abidjan 2025
 - 🌟 Featured on Product Hunt
-- 📰 Article dans Tech Africa News
+- 📰 Unipod & PNUD
 
 ---
 
