@@ -5,6 +5,7 @@ import '../budget/presentation/pages/budget_list_page.dart';
 import '../goals/presentation/pages/goals_list_page.dart';
 import '../transactions/presentation/pages/transaction_history_page.dart';
 import '../transactions/presentation/pages/add_transaction_page.dart';
+import '../overlay/presentation/pages/permissions_page.dart'; // AJOUTE CETTE LIGNE
 
 class MainNavigation extends ConsumerStatefulWidget {
   const MainNavigation({super.key});
@@ -254,6 +255,26 @@ class DashboardHome extends ConsumerWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PermissionsPage(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.settings),
+                label: const Text('Activer les alertes intelligentes'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF00A86B),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
               ),
             ),
             const SizedBox(height: 80), // Espace pour le FAB

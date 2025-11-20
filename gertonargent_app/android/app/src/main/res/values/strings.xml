@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GèrTonArgent</string>
+    <string name="accessibility_service_description">
+        GèrTonArgent surveille vos applications Mobile Money pour vous aider 
+        à mieux gérer votre budget. Nous détectons uniquement quand vous ouvrez 
+        une app de paiement pour vous rappeler vos objectifs. 
+        Aucune donnée bancaire n\'est collectée.
+    </string>
+</resources>
