@@ -519,7 +519,7 @@ Caption:   Inter Regular, 12px
 
 ## 🚀 Roadmap Détaillée
 
-### ✅ Phase 1 - Fondations (TERMINÉE - Oct 2024)
+### ✅ Phase 1 - Fondations (TERMINÉE - Nov 2025)
 - [x] Backend API complet avec FastAPI
 - [x] Base de données PostgreSQL
 - [x] Authentification JWT sécurisée
@@ -530,7 +530,7 @@ Caption:   Inter Regular, 12px
 - [x] Navigation avec Bottom Bar
 - [x] Splash screen professionnel
 
-### 🔥 Phase 2 - INNOVATION (En cours - Nov 2024)
+### 🔥 Phase 2 - INNOVATION (En cours - Nov 2025)
 - [ ] **Service Accessibility Android**
   - [ ] Détection apps Mobile Money
   - [ ] Capture d'événements utilisateur
@@ -549,7 +549,7 @@ Caption:   Inter Regular, 12px
   - [ ] Recommandations personnalisées
   - [ ] Détection d'anomalies
 
-### 📊 Phase 3 - Statistiques (Déc 2024)
+### 📊 Phase 3 - Statistiques (Déc 2025)
 - [ ] Dashboard statistiques avancé
 - [ ] Graphiques interactifs (FL Chart)
 - [ ] Analyse par catégorie
@@ -557,7 +557,7 @@ Caption:   Inter Regular, 12px
 - [ ] Export de rapports (PDF, Excel)
 - [ ] Comparaisons mois par mois
 
-### 🌐 Phase 4 - Perfectionnement (Jan 2025)
+### 🌐 Phase 4 - Perfectionnement (Janv 2026)
 - [ ] Mode hors ligne complet
 - [ ] Synchronisation cloud
 - [ ] Multi-devises (CFA, EUR, USD)
@@ -566,14 +566,14 @@ Caption:   Inter Regular, 12px
 - [ ] Notifications push intelligentes
 - [ ] Catégories personnalisables
 
-### 🎯 Phase 5 - Gamification (Fév 2025)
+### 🎯 Phase 5 - Gamification (Janv 2026)
 - [ ] Système de badges
 - [ ] Défis d'épargne
 - [ ] Classements entre amis
 - [ ] Récompenses virtuelles
 - [ ] Streaks de bonne gestion
 
-### 🔗 Phase 6 - Intégrations (Mar 2025)
+### 🔗 Phase 6 - Intégrations (Fév 2026)
 - [ ] API Mobile Money (si disponible)
 - [ ] Import bancaire automatique
 - [ ] Synchronisation Google Drive
