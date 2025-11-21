@@ -4,6 +4,7 @@ import '../../../../data/models/goal_model.dart';
 import '../../providers/goal_provider.dart';
 import 'package:intl/intl.dart';
 import 'add_goal_page.dart';
+import '../../../../core/widgets/custom_card.dart';
 
 class GoalsListPage extends ConsumerWidget {
   const GoalsListPage({super.key});
@@ -11,52 +12,68 @@ class GoalsListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final goalState = ref.watch(goalProvider);
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF00A86B),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
+        title: Text(
           'Mes Objectifs',
-          style: TextStyle(color: Colors.white),
+          style: textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        centerTitle: false,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddGoalPage(),
+            ),
+          );
+        },
+        icon: const Icon(Icons.add),
+        label: const Text('Nouvel Objectif'),
+        backgroundColor: colorScheme.primaryContainer,
+        foregroundColor: colorScheme.onPrimaryContainer,
       ),
       body: Column(
         children: [
           // En-tête avec stats
           Container(
             width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFF00A86B), Color(0xFF00D084)],
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              border: Border(
+                bottom: BorderSide(color: colorScheme.outlineVariant),
               ),
             ),
-            padding: const EdgeInsets.all(24),
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _StatCard(
-                      label: 'Objectifs actifs',
-                      value: '${goalState.activeGoals.length}',
-                      icon: Icons.flag,
+                    Expanded(
+                      child: _StatCard(
+                        label: 'Actifs',
+                        value: '${goalState.activeGoals.length}',
+                        icon: Icons.flag,
+                        color: colorScheme.primary,
+                        backgroundColor: colorScheme.primaryContainer,
+                      ),
                     ),
-                    _StatCard(
-                      label: 'Complétés',
-                      value: '${goalState.completedGoals.length}',
-                      icon: Icons.check_circle,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _StatCard(
+                        label: 'Complétés',
+                        value: '${goalState.completedGoals.length}',
+                        icon: Icons.check_circle,
+                        color: Colors.green,
+                        backgroundColor: Colors.green.withOpacity(0.1),
+                      ),
                     ),
                   ],
                 ),
@@ -64,50 +81,35 @@ class GoalsListPage extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: colorScheme.tertiaryContainer,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Total économisé',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onTertiaryContainer,
                             ),
                           ),
+                          const SizedBox(height: 4),
                           Text(
                             '${NumberFormat('#,###').format(goalState.totalSavedAmount)} FCFA',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
+                            style: textTheme.titleLarge?.copyWith(
+                              color: colorScheme.onTertiaryContainer,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Objectif total',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 12,
-                            ),
-                          ),
-                          Text(
-                            '${NumberFormat('#,###').format(goalState.totalTargetAmount)} FCFA',
-                            style: const TextStyle(
-                              color: Colors.white70,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                      Icon(
+                        Icons.savings_outlined,
+                        color: colorScheme.onTertiaryContainer,
+                        size: 32,
                       ),
                     ],
                   ),
@@ -119,7 +121,7 @@ class GoalsListPage extends ConsumerWidget {
           // Liste des objectifs
           Expanded(
             child: goalState.isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(child: CircularProgressIndicator(color: colorScheme.primary))
                 : goalState.activeGoals.isEmpty
                     ? Center(
                         child: Column(
@@ -127,31 +129,30 @@ class GoalsListPage extends ConsumerWidget {
                           children: [
                             Icon(
                               Icons.flag_outlined,
-                              size: 80,
-                              color: Colors.grey[400],
+                              size: 64,
+                              color: colorScheme.outline,
                             ),
                             const SizedBox(height: 16),
                             Text(
                               'Aucun objectif',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey[600],
+                              style: textTheme.titleMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               'Créez votre premier objectif',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[500],
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
                         ),
                       )
-                    : ListView.builder(
+                    : ListView.separated(
                         padding: const EdgeInsets.all(16),
                         itemCount: goalState.activeGoals.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: 12),
                         itemBuilder: (context, index) {
                           final goal = goalState.activeGoals[index];
                           return _GoalCard(goal: goal);
@@ -159,18 +160,6 @@ class GoalsListPage extends ConsumerWidget {
                       ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddGoalPage(),
-            ),
-          );
-        },
-        backgroundColor: const Color(0xFF00A86B),
-        child: const Icon(Icons.add),
       ),
     );
   }
@@ -180,41 +169,50 @@ class _StatCard extends StatelessWidget {
   final String label;
   final String value;
   final IconData icon;
+  final Color color;
+  final Color backgroundColor;
 
   const _StatCard({
     required this.label,
     required this.value,
     required this.icon,
+    required this.color,
+    required this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.white, size: 24),
+          Row(
+            children: [
+              Icon(icon, color: color, size: 20),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
+            style: textTheme.headlineSmall?.copyWith(
+              color: color,
               fontWeight: FontWeight.bold,
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -229,50 +227,50 @@ class _GoalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final percentage = goal.progressPercentage;
     final daysLeft = goal.daysRemaining;
+    
+    final progressColor = percentage >= 80
+        ? Colors.green
+        : percentage >= 50
+            ? Colors.orange
+            : colorScheme.primary;
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+    return CustomCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Text(
-                goal.getStatusIcon(),
-                style: const TextStyle(fontSize: 28),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  goal.getStatusIcon(),
+                  style: const TextStyle(fontSize: 24),
+                ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       goal.title,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Échéance: ${DateFormat('dd/MM/yyyy').format(goal.deadline)}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
+                      'Échéance: ${DateFormat('dd MMM yyyy', 'fr_FR').format(goal.deadline)}',
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -285,56 +283,74 @@ class _GoalCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: daysLeft < 30
-                      ? Colors.red.withOpacity(0.1)
-                      : const Color(0xFF00A86B).withOpacity(0.1),
+                      ? colorScheme.errorContainer
+                      : colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   '$daysLeft jours',
-                  style: TextStyle(
-                    fontSize: 12,
+                  style: textTheme.labelSmall?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: daysLeft < 30 ? Colors.red : const Color(0xFF00A86B),
+                    color: daysLeft < 30 
+                        ? colorScheme.error 
+                        : colorScheme.primary,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '${NumberFormat('#,###').format(goal.currentAmount)} FCFA',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF00A86B),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Économisé',
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${NumberFormat('#,###').format(goal.currentAmount)} F',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: progressColor,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                '${NumberFormat('#,###').format(goal.targetAmount)} FCFA',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'Cible',
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${NumberFormat('#,###').format(goal.targetAmount)} F',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
           const SizedBox(height: 12),
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
-              value: percentage / 100,
-              minHeight: 10,
-              backgroundColor: Colors.grey[200],
-              valueColor: AlwaysStoppedAnimation<Color>(
-                percentage >= 80
-                    ? const Color(0xFF00A86B)
-                    : percentage >= 50
-                        ? Colors.orange
-                        : Colors.red,
-              ),
+              value: (percentage / 100).clamp(0.0, 1.0),
+              minHeight: 8,
+              backgroundColor: colorScheme.surfaceContainerHighest,
+              valueColor: AlwaysStoppedAnimation<Color>(progressColor),
             ),
           ),
           const SizedBox(height: 8),
@@ -343,16 +359,14 @@ class _GoalCard extends StatelessWidget {
             children: [
               Text(
                 '${percentage.toStringAsFixed(1)}% atteint',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               Text(
                 'Reste: ${NumberFormat('#,###').format(goal.remainingAmount)} FCFA',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../data/models/transaction_model.dart';
 import '../../providers/transaction_provider.dart';
 import 'package:intl/intl.dart';
+import '../../../../core/widgets/custom_card.dart';
 
 class TransactionHistoryPage extends ConsumerWidget {
   const TransactionHistoryPage({super.key});
@@ -10,54 +11,54 @@ class TransactionHistoryPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final transactionState = ref.watch(transactionProvider);
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF00A86B),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
+        title: Text(
           'Historique',
-          style: TextStyle(color: Colors.white),
+          style: textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        centerTitle: false,
       ),
       body: Column(
         children: [
           // En-tête avec stats
           Container(
             width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFF00A86B), Color(0xFF00D084)],
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              border: Border(
+                bottom: BorderSide(color: colorScheme.outlineVariant),
               ),
             ),
-            padding: const EdgeInsets.all(24),
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _StatCard(
-                      label: 'Revenus',
-                      amount: transactionState.monthlyIncome,
-                      color: Colors.green,
-                      icon: Icons.arrow_downward,
+                    Expanded(
+                      child: _StatCard(
+                        label: 'Revenus',
+                        amount: transactionState.monthlyIncome,
+                        color: Colors.green, // Garder vert pour revenus
+                        icon: Icons.arrow_downward,
+                        backgroundColor: Colors.green.withOpacity(0.1),
+                      ),
                     ),
-                    _StatCard(
-                      label: 'Dépenses',
-                      amount: transactionState.monthlyExpenses,
-                      color: Colors.red,
-                      icon: Icons.arrow_upward,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _StatCard(
+                        label: 'Dépenses',
+                        amount: transactionState.monthlyExpenses,
+                        color: colorScheme.error,
+                        icon: Icons.arrow_upward,
+                        backgroundColor: colorScheme.errorContainer,
+                      ),
                     ),
                   ],
                 ),
@@ -65,24 +66,22 @@ class TransactionHistoryPage extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Solde : ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                      Text(
+                        'Solde du mois',
+                        style: textTheme.titleMedium?.copyWith(
+                          color: colorScheme.onPrimaryContainer,
                         ),
                       ),
                       Text(
                         '${NumberFormat('#,###').format(transactionState.balance)} FCFA',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
+                        style: textTheme.headlineSmall?.copyWith(
+                          color: colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -96,7 +95,7 @@ class TransactionHistoryPage extends ConsumerWidget {
           // Liste des transactions
           Expanded(
             child: transactionState.isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(child: CircularProgressIndicator(color: colorScheme.primary))
                 : transactionState.transactions.isEmpty
                     ? Center(
                         child: Column(
@@ -104,34 +103,32 @@ class TransactionHistoryPage extends ConsumerWidget {
                           children: [
                             Icon(
                               Icons.receipt_long_outlined,
-                              size: 80,
-                              color: Colors.grey[400],
+                              size: 64,
+                              color: colorScheme.outline,
                             ),
                             const SizedBox(height: 16),
                             Text(
                               'Aucune transaction',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey[600],
+                              style: textTheme.titleMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Ajoutez votre première transaction',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[500],
+                              'Vos transactions apparaîtront ici',
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
                         ),
                       )
-                    : ListView.builder(
+                    : ListView.separated(
                         padding: const EdgeInsets.all(16),
                         itemCount: transactionState.transactions.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: 8),
                         itemBuilder: (context, index) {
-                          final transaction =
-                              transactionState.transactions[index];
+                          final transaction = transactionState.transactions[index];
                           return _TransactionCard(transaction: transaction);
                         },
                       ),
@@ -146,34 +143,39 @@ class _StatCard extends StatelessWidget {
   final String label;
   final double amount;
   final Color color;
+  final Color backgroundColor;
   final IconData icon;
 
   const _StatCard({
     required this.label,
     required this.amount,
     required this.color,
+    required this.backgroundColor,
     required this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: Colors.white, size: 20),
+              Icon(icon, color: color, size: 20),
               const SizedBox(width: 8),
               Text(
                 label,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -181,9 +183,8 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             '${NumberFormat('#,###').format(amount)} F',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
+            style: textTheme.titleLarge?.copyWith(
+              color: color,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -200,30 +201,20 @@ class _TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final isIncome = transaction.type == TransactionType.income;
-    final color = isIncome ? Colors.green : Colors.red;
+    final amountColor = isIncome ? Colors.green : colorScheme.error;
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+    return CustomCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
       child: Row(
         children: [
           // Icône catégorie
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: amountColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -238,28 +229,27 @@ class _TransactionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  transaction.category.name.toUpperCase(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                  transaction.category.name,
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  transaction.description,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 14,
+                if (transaction.description.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    transaction.description,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                ],
                 const SizedBox(height: 4),
                 Text(
-                  DateFormat('dd/MM/yyyy').format(transaction.date),
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                    fontSize: 12,
+                  DateFormat('dd MMM yyyy', 'fr_FR').format(transaction.date),
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -268,9 +258,8 @@ class _TransactionCard extends StatelessWidget {
           // Montant
           Text(
             '${isIncome ? '+' : '-'}${NumberFormat('#,###').format(transaction.amount)} F',
-            style: TextStyle(
-              color: color,
-              fontSize: 18,
+            style: textTheme.titleMedium?.copyWith(
+              color: amountColor,
               fontWeight: FontWeight.bold,
             ),
           ),

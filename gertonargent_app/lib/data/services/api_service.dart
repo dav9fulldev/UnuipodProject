@@ -67,6 +67,23 @@ class ApiService {
     }
   }
 
+  Future<Map<String, dynamic>> googleAuth({
+    required String idToken,
+  }) async {
+    try {
+      final response = await _dio.post(
+        ApiConstants.googleAuth,
+        data: {
+          'id_token': idToken,
+        },
+      );
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
   // Budgets
   Future<List<dynamic>> getBudgets() async {
     try {

@@ -23,6 +23,9 @@ dependencies:
   http: ^1.1.2
   dio: ^5.4.0
   
+  # Authentification
+  google_sign_in: ^6.2.1
+  
   # UI
   google_fonts: ^6.1.0
   fl_chart: ^0.65.0
@@ -40,6 +43,7 @@ dependencies:
   # Utilitaires
   intl: ^0.18.1
   uuid: ^4.3.3
+  flutter_staggered_animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -50,7 +54,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  
+
   assets:
     - assets/images/
-    - assets/animations/

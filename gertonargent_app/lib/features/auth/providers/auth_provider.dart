@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/services/api_service.dart';
+import '../../../data/services/google_auth_service.dart';
 import '../../../data/models/user_model.dart';
 
 final apiServiceProvider = Provider((ref) => ApiService());
@@ -101,6 +102,65 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(
         isLoading: false,
         error: 'Erreur d\'inscription: $e',
+      );
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final googleAuthService = GoogleAuthService();
+      
+      // Étape 1: Connexion Google
+      print('🔐 Tentative de connexion Google...');
+      final account = await googleAuthService.signIn();
+      
+      if (account == null) {
+        print('❌ Aucun compte sélectionné');
+        state = state.copyWith(
+          isLoading: false,
+          error: 'Connexion Google annulée',
+        );
+        return;
+      }
+      
+      print('✅ Compte Google connecté: ${account.email}');
+      
+      // Étape 2: Obtenir le token ID
+      print('🔑 Récupération du token ID...');
+      final idToken = await googleAuthService.getIdToken(account);
+      
+      if (idToken == null || idToken.isEmpty) {
+        print('❌ Token ID vide ou null');
+        state = state.copyWith(
+          isLoading: false,
+          error: 'Impossible d\'obtenir le token Google. Vérifiez la configuration du Client ID dans Google Cloud Console.',
+        );
+        return;
+      }
+      
+      print('✅ Token ID obtenu (${idToken.length} caractères)');
+      
+      // Étape 3: Envoyer au backend
+      print('📤 Envoi du token au backend...');
+      final response = await _apiService.googleAuth(idToken: idToken);
+      
+      final token = response['access_token'];
+      _apiService.setToken(token);
+      
+      print('✅ Authentification réussie!');
+
+      state = state.copyWith(
+        isAuthenticated: true,
+        token: token,
+        isLoading: false,
+      );
+    } catch (e) {
+      print('❌ Erreur Google Sign-In: $e');
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
       );
     }
   }

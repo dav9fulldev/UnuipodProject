@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../data/models/goal_model.dart';
 import '../../providers/goal_provider.dart';
+import '../../../../core/widgets/custom_text_field.dart';
+import '../../../../core/widgets/custom_button.dart';
 
 class AddGoalPage extends ConsumerStatefulWidget {
   const AddGoalPage({super.key});
@@ -37,9 +39,10 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Objectif créé avec succès !'),
-          backgroundColor: Color(0xFF00A86B),
+        SnackBar(
+          content: const Text('Objectif créé avec succès !'),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          behavior: SnackBarBehavior.floating,
         ),
       );
     }
@@ -51,6 +54,14 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 3650)), // 10 ans
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme,
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -61,19 +72,19 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF00A86B),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
+        title: Text(
           'Nouvel objectif',
-          style: TextStyle(color: Colors.white),
+          style: textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        centerTitle: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -88,38 +99,24 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
                   child: Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00A86B).withOpacity(0.1),
+                      color: colorScheme.primaryContainer,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.flag,
-                      size: 80,
-                      color: Color(0xFF00A86B),
+                      size: 64,
+                      color: colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ),
                 const SizedBox(height: 32),
 
                 // Titre
-                const Text(
-                  'Titre de l\'objectif',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextFormField(
+                CustomTextField(
                   controller: _titleController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.title),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[50],
-                    hintText: 'Ex: Terrain à Yopougon',
-                  ),
+                  label: 'Titre de l\'objectif',
+                  hint: 'Ex: Terrain à Yopougon',
+                  prefixIcon: Icons.title,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Entrez un titre';
@@ -127,34 +124,17 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
                     return null;
                   },
                 ),
+                
                 const SizedBox(height: 24),
 
                 // Montant
-                const Text(
-                  'Montant cible',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextFormField(
+                CustomTextField(
                   controller: _amountController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.money),
-                    suffixText: 'FCFA',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[50],
-                    hintText: '5000000',
-                  ),
+                  label: 'Montant cible',
+                  hint: 'Ex: 5000000',
+                  prefixIcon: Icons.money,
+                  suffixText: 'FCFA',
                   keyboardType: TextInputType.number,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Entrez un montant';
@@ -165,72 +145,62 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
                     return null;
                   },
                 ),
+                
                 const SizedBox(height: 24),
 
                 // Date limite
-                const Text(
-                  'Date limite',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
                 InkWell(
                   onTap: () => _selectDate(context),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey[300]!),
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.grey[50],
+                  borderRadius: BorderRadius.circular(12),
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: 'Date limite',
+                      prefixIcon: const Icon(Icons.calendar_today),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      filled: true,
+                      fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.3),
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(Icons.calendar_today,
-                            color: Color(0xFF00A86B)),
-                        const SizedBox(width: 12),
                         Text(
                           '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: textTheme.bodyLarge,
                         ),
-                        const Spacer(),
                         Text(
                           '${_selectedDate.difference(DateTime.now()).inDays} jours',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
+                
                 const SizedBox(height: 32),
 
                 // Info
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00A86B).withOpacity(0.1),
+                    color: colorScheme.secondaryContainer,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.info_outline,
-                        color: Color(0xFF00A86B),
+                        color: colorScheme.onSecondaryContainer,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           'Nous vous rappellerons régulièrement de cet objectif pour vous aider à l\'atteindre !',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[700],
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSecondaryContainer,
                           ),
                         ),
                       ),
@@ -240,25 +210,11 @@ class _AddGoalPageState extends ConsumerState<AddGoalPage> {
                 const SizedBox(height: 32),
 
                 // Bouton d'ajout
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: _addGoal,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF00A86B),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      'Créer l\'objectif',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                CustomButton(
+                  text: 'Créer l\'objectif',
+                  onPressed: _addGoal,
+                  icon: Icons.check,
+                  type: ButtonType.filled,
                 ),
               ],
             ),
