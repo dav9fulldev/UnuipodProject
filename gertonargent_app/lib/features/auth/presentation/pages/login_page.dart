@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/auth_provider.dart';
+import 'onboarding_flow_page.dart'; // AJOUTE CETTE LIGNE
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -181,7 +182,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/register');
+                          // CHANGE CETTE LIGNE
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const OnboardingFlowPage(),
+                            ),
+                          );
                         },
                         child: const Text(
                           'Créer un compte',

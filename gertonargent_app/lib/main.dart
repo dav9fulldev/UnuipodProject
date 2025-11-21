@@ -4,7 +4,6 @@ import 'core/theme/app_theme.dart';
 import 'features/auth/providers/auth_provider.dart';
 import 'features/auth/presentation/pages/splash_page.dart';
 import 'features/auth/presentation/pages/login_page.dart';
-import 'features/auth/presentation/pages/register_page.dart';
 import 'features/navigation/main_navigation.dart';
 
 void main() {
@@ -27,7 +26,6 @@ class MyApp extends ConsumerWidget {
       home: const SplashPage(),
       routes: {
         '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
         '/dashboard': (context) => const MainNavigation(),
       },
     );
