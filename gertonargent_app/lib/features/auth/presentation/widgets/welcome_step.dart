@@ -24,10 +24,10 @@ class WelcomeStep extends ConsumerWidget {
     try {
       // Enregistrer l'utilisateur avec toutes les données
       await ref.read(authProvider.notifier).register(
-            onboardingData.email!,
-            onboardingData.password!,
-            onboardingData.firstName,
-            onboardingData.lastName,
+            email: onboardingData.email!,
+            password: onboardingData.password!,
+            firstName: onboardingData.firstName,
+            lastName: onboardingData.lastName,
           );
 
       // TODO: Envoyer les autres données (profession, revenus, objectifs, catégories) au backend

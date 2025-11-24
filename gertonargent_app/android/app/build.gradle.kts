@@ -42,4 +42,11 @@ flutter {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
     implementation("androidx.cardview:cardview:1.0.0")
+
+    // Vosk pour la détection du wake word "Sika" offline
+    implementation("com.alphacephei:vosk-android:0.3.47")
+
+    // Pour le service en arrière-plan
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-service:2.7.0")
 }

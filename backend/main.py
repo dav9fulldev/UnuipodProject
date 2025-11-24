@@ -1,16 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.models.database import engine, Base
-from app.routes import auth, budgets, ai
+from app.routes import auth, budgets, transactions, goals, ai
 
+# Créer toutes les tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="GèrTonArgent API",
-    description="Backend pour l'assistant financier intelligent",
-    version="2.0.0"
+    description="Backend pour l'assistant financier intelligent - Gestion budgétaire avec IA",
+    version="2.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
+# Configuration CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,8 +23,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Inclure tous les routeurs
 app.include_router(auth.router)
 app.include_router(budgets.router)
+app.include_router(transactions.router)
+app.include_router(goals.router)
 app.include_router(ai.router)
 
 @app.get("/")

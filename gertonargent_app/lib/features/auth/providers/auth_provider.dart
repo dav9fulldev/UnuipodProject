@@ -45,7 +45,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   AuthNotifier(this._apiService) : super(AuthState());
 
-  Future<void> login({
+  Future<bool> login({
     required String email,
     required String password,
   }) async {
@@ -58,51 +58,71 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
 
       final token = response['access_token'];
-      _apiService.setToken(token);
+
+      // Récupérer les infos utilisateur
+      final userResponse = await _apiService.getMe();
+      final user = UserModel.fromJson(userResponse);
 
       state = state.copyWith(
         isAuthenticated: true,
         token: token,
+        user: user,
         isLoading: false,
       );
+      return true;
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: 'Erreur de connexion: $e',
+        error: e.toString(),
       );
+      return false;
     }
   }
 
-  Future<void> register(
-    String email,
-    String password,
+  Future<bool> register({
+    required String email,
+    required String password,
     String? firstName,
     String? lastName,
-  ) async {
+  }) async {
     state = state.copyWith(isLoading: true, error: null);
 
     try {
+      // Créer un username à partir du prénom et nom
+      final username = '${firstName ?? 'user'}${lastName ?? ''}'.toLowerCase().replaceAll(' ', '');
+
       final response = await _apiService.register(
         email: email,
-        username: '${firstName ?? ''}_${lastName ?? ''}', // Temporaire
-        phone: '', // Temporaire
+        username: username,
         password: password,
+        firstName: firstName,
+        lastName: lastName,
       );
 
       final token = response['access_token'];
-      _apiService.setToken(token);
+
+      // Récupérer les infos utilisateur
+      final userResponse = await _apiService.getMe();
+      final user = UserModel.fromJson(userResponse);
 
       state = state.copyWith(
         isAuthenticated: true,
         token: token,
+        user: user,
         isLoading: false,
       );
+      return true;
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: 'Erreur d\'inscription: $e',
+        error: e.toString(),
       );
+      return false;
     }
+  }
+
+  void clearError() {
+    state = state.copyWith(error: null);
   }
 
   void logout() {

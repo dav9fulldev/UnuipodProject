@@ -4,25 +4,22 @@ class UserModel {
   final String username;
   final String phone;
   final bool isActive;
-  final DateTime createdAt;
 
   UserModel({
     required this.id,
     required this.email,
     required this.username,
     required this.phone,
-    required this.isActive,
-    required this.createdAt,
+    this.isActive = true,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
-      email: json['email'],
-      username: json['username'],
-      phone: json['phone'],
-      isActive: json['is_active'],
-      createdAt: DateTime.parse(json['created_at']),
+      email: json['email'] ?? '',
+      username: json['username'] ?? '',
+      phone: json['phone'] ?? '',
+      isActive: json['is_active'] ?? true,
     );
   }
 
@@ -33,7 +30,22 @@ class UserModel {
       'username': username,
       'phone': phone,
       'is_active': isActive,
-      'created_at': createdAt.toIso8601String(),
     };
+  }
+
+  UserModel copyWith({
+    int? id,
+    String? email,
+    String? username,
+    String? phone,
+    bool? isActive,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      phone: phone ?? this.phone,
+      isActive: isActive ?? this.isActive,
+    );
   }
 }

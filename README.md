@@ -8,6 +8,124 @@
 [![License](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🚀 LA RÉVOLUTION DE LA GESTION FINANCIÈRE EN AFRIQUE
 
@@ -50,6 +168,124 @@ Continuer quand même ?
 **Vous gardez le contrôle total !** L'app ne bloque jamais vos transactions - elle vous informe simplement pour que vous décidiez en toute conscience.
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🌟 Pourquoi GèrTonArgent Change Tout
 
@@ -64,6 +300,124 @@ Continuer quand même ?
 | **Permissions** | Accès comptes bancaires | **Observation seulement** ✅ |
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## ✨ Fonctionnalités Complètes
 
@@ -129,6 +483,124 @@ Tu veux continuer ?"
 - Performance optimale
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🛠️ Stack Technique Complet
 
@@ -170,6 +642,124 @@ Accessibility Service        - Détection apps Mobile Money
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 📦 Installation Complète
 
@@ -189,6 +779,124 @@ Accessibility Service        - Détection apps Mobile Money
 - [Git](https://git-scm.com/downloads)
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ### 1️⃣ Cloner le Projet
 
@@ -203,6 +911,124 @@ cd gertonargent-v2
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ### 2️⃣ Configuration Backend
 
@@ -277,6 +1103,124 @@ Le backend sera accessible sur : **http://localhost:8000**
 Documentation API : **http://localhost:8000/docs**
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ### 3️⃣ Configuration Frontend
 
@@ -311,6 +1255,124 @@ flutter build apk --release
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ### 4️⃣ Configuration des Permissions Android
 
@@ -330,6 +1392,124 @@ Modifier `android/app/src/main/AndroidManifest.xml` :
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🏗️ Architecture Détaillée
 
@@ -472,6 +1652,124 @@ gertonargent_v2/
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🎨 Design System
 
@@ -500,6 +1798,124 @@ Caption:   Inter Regular, 12px
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 📱 Screenshots
 
@@ -516,6 +1932,124 @@ Caption:   Inter Regular, 12px
 ![Overlay Alert](docs/screenshots/overlay.png)
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🚀 Roadmap Détaillée
 
@@ -580,6 +2114,124 @@ Caption:   Inter Regular, 12px
 - [ ] Export vers comptabilité
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🧪 Tests
 
@@ -598,6 +2250,124 @@ flutter test --coverage
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 📚 Documentation API
 
@@ -646,6 +2416,124 @@ POST /ai/predict         - Prédictions de fin de mois
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🔒 Sécurité & Confidentialité
 
@@ -672,6 +2560,124 @@ POST /ai/predict         - Prédictions de fin de mois
 | `POST_NOTIFICATIONS` | Pour les alertes intelligentes |
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🤝 Contribution
 
@@ -712,6 +2718,124 @@ Nous accueillons toutes les contributions ! 🎉
 - 🧪 Tests et qualité
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 📄 Licence
 
@@ -738,6 +2862,124 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 ```
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 👨‍💻 Équipe
 
@@ -752,6 +2994,124 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 Merci à tous ceux qui ont contribué ! 🙏
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🙏 Remerciements
 
@@ -763,6 +3123,124 @@ Merci à tous ceux qui ont contribué ! 🙏
 - 🧪 **Testeurs beta** - Pour leur patience et leurs retours
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 📞 Support & Contact
 
@@ -793,6 +3271,124 @@ R: Wave, Orange Money, Moov Money, MTN Money (CI).
 R: Oui, 100% gratuite et open source !
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🌍 Vision & Mission
 
@@ -810,6 +3406,124 @@ Permettre à chaque africain de prendre le contrôle de ses finances grâce à u
 - 🤝 **Communauté** - Construit avec et pour les utilisateurs
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🎓 Ressources & Apprentissage
 
@@ -825,6 +3539,124 @@ Permettre à chaque africain de prendre le contrôle de ses finances grâce à u
 - [Intégration IA](docs/tutorials/ai-integration.md)
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 📊 Statistiques du Projet
 
@@ -835,6 +3667,124 @@ Permettre à chaque africain de prendre le contrôle de ses finances grâce à u
 ![License](https://img.shields.io/github/license/votre-username/gertonargent-v2)
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 ## 🏆 Reconnaissance
 
@@ -844,6 +3794,124 @@ Permettre à chaque africain de prendre le contrôle de ses finances grâce à u
 - 📰 Unipod & PNUD
 
 ---
+## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
+
+### L'Innovation Qui Change Tout
+
+**Sika** est votre assistant financier personnel qui fonctionne exactement comme Siri d'Apple, mais pour vos finances! La grande différence? **Il fonctionne même quand l'app est fermée**.
+
+### Comment Utiliser Sika
+
+1. **Activation** : Allez dans "Assistant IA" > Activez le toggle "Assistant Sika"
+2. **Permissions** : Autorisez les permissions microphone et overlay
+3. **Utilisation** : Dites simplement **"Sika"** n'importe où sur votre téléphone!
+
+### Exemples d'Utilisation
+
+```
+Vous : "Sika"
+🟢 [Overlay apparaît avec animation pulsante verte]
+
+Vous : "Puis-je dépenser 50,000 FCFA pour un nouveau téléphone?"
+
+Sika : "Analysons ça ensemble... Tu as 120,000 FCFA de budget restant
+ce mois-ci. Cette dépense représente 42% de ton budget. Tu as aussi
+un objectif 'Nouveau PC' à 500,000 FCFA dont il reste 200,000 FCFA.
+Cette dépense ralentirait cet objectif de 3 semaines.
+
+Mon conseil : Si c'est urgent, vas-y. Sinon, attends le mois prochain
+pour être plus confortable financièrement."
+```
+
+### Architecture Technique de Sika
+
+#### Services Android Natifs
+- **SikaWakeWordService.kt** : Détection continue du mot-clé "Sika" avec Vosk
+- **SikaOverlayService.kt** : Interface flottante style Siri
+- **MainActivity.kt** : Gestion des permissions et communication Flutter ↔ Native
+
+#### Composants Flutter
+- **sika_provider.dart** : Logique métier et communication avec le backend
+- **sika_service_provider.dart** : Contrôle des services Android
+- **sika_page.dart** : Interface principale de Sika
+- **sika_floating_button.dart** : Bouton flottant dans l'app
+- **sika_service_toggle.dart** : Toggle pour activer/désactiver le service
+
+### Technologies Utilisées pour Sika
+
+```
+🎙️ Vosk (vosk-android:0.3.47)    - Wake word detection offline
+🗣️ Android SpeechRecognizer       - Speech-to-Text
+🔊 Android TextToSpeech           - Réponses vocales
+🪟 System Overlay Window          - Interface flottante
+⚡ Foreground Service             - Fonctionnement en arrière-plan
+💬 FastAPI Backend                - Analyse IA des requêtes
+🧠 GPT Integration (prévu)        - Conversations naturelles
+```
+
+### Permissions Requises pour Sika
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
+
+### Fichiers Modifiés/Ajoutés pour Sika
+
+#### Android (Kotlin)
+```
+android/app/src/main/kotlin/com/example/gertonargent_app/
+├── SikaWakeWordService.kt          [NOUVEAU - 450 lignes]
+├── SikaOverlayService.kt           [NOUVEAU - 380 lignes]
+└── MainActivity.kt                 [MODIFIÉ - Ajout SIKA_CHANNEL]
+```
+
+#### Flutter (Dart)
+```
+lib/features/ai_assistant/
+├── presentation/
+│   ├── pages/
+│   │   └── sika_page.dart                      [NOUVEAU - 450 lignes]
+│   └── widgets/
+│       ├── sika_floating_button.dart           [NOUVEAU - 250 lignes]
+│       └── sika_service_toggle.dart            [NOUVEAU - 125 lignes]
+└── providers/
+    ├── sika_provider.dart                      [NOUVEAU - 200 lignes]
+    └── sika_service_provider.dart              [NOUVEAU - 125 lignes]
+```
+
+### Roadmap Sika
+
+#### ✅ Phase 1 - TERMINÉE (Nov 2024)
+- [x] Wake word detection avec Vosk
+- [x] Service en arrière-plan
+- [x] Overlay flottant
+- [x] Speech-to-Text
+- [x] Text-to-Speech
+- [x] Interface Flutter
+- [x] Providers Riverpod
+- [x] Communication Flutter ↔ Native
+
+#### 🔄 Phase 2 - En Cours (Déc 2024)
+- [ ] Intégration GPT pour conversations naturelles
+- [ ] Analyse contextuelle des transactions
+- [ ] Recommandations intelligentes
+- [ ] Historique des conversations
+- [ ] Personnalisation de la voix
+
+#### 📅 Phase 3 - Prévue (Jan 2025)
+- [ ] Commandes vocales avancées
+- [ ] Routines automatiques
+- [ ] Intégration calendrier
+- [ ] Rappels intelligents
+- [ ] Multi-langue (Anglais, Wolof, etc.)
+
+---
+
+**Note**: Sika est une innovation unique qui différencie GèrTonArgent de toutes les autres applications de gestion financière. C'est le premier assistant vocal dédié aux finances personnelles en Afrique!
 
 **Fait avec ❤️ pour l'Afrique 🇨🇮**
 

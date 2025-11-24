@@ -106,7 +106,8 @@ class _GoalsStepState extends ConsumerState<GoalsStep> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 1.1,
+                childAspectRatio:
+                    1.0, // CHANGÉ de 1.1 à 1.0 pour plus de hauteur
               ),
               itemCount: _goals.length,
               itemBuilder: (context, index) {
@@ -117,7 +118,7 @@ class _GoalsStepState extends ConsumerState<GoalsStep> {
                   onTap: () => _toggleGoal(goal['value']),
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12), // RÉDUIT de 16 à 12
                     decoration: BoxDecoration(
                       color: isSelected
                           ? const Color(0xFF00A86B).withOpacity(0.1)
@@ -142,29 +143,35 @@ class _GoalsStepState extends ConsumerState<GoalsStep> {
                       children: [
                         Text(
                           goal['icon'],
-                          style: const TextStyle(fontSize: 40),
+                          style: const TextStyle(
+                              fontSize: 36), // RÉDUIT de 40 à 36
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          goal['label'],
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight:
-                                isSelected ? FontWeight.bold : FontWeight.w500,
-                            color: isSelected
-                                ? const Color(0xFF00A86B)
-                                : Colors.black87,
+                        const SizedBox(height: 6), // RÉDUIT de 8 à 6
+                        Flexible(
+                          // AJOUTÉ Flexible pour éviter débordement
+                          child: Text(
+                            goal['label'],
+                            style: TextStyle(
+                              fontSize: 11, // RÉDUIT de 13 à 11
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.w500,
+                              color: isSelected
+                                  ? const Color(0xFF00A86B)
+                                  : Colors.black87,
+                              height: 1.2, // AJOUTÉ pour espacement lignes
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 3, // CHANGÉ de 2 à 3
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         if (isSelected) ...[
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 2), // RÉDUIT de 4 à 2
                           const Icon(
                             Icons.check_circle,
                             color: Color(0xFF00A86B),
-                            size: 20,
+                            size: 18, // RÉDUIT de 20 à 18
                           ),
                         ],
                       ],

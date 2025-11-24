@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../dashboard/presentation/pages/dashboard_page.dart';
 import '../budget/presentation/pages/budget_list_page.dart';
 import '../goals/presentation/pages/goals_list_page.dart';
 import '../transactions/presentation/pages/transaction_history_page.dart';
 import '../transactions/presentation/pages/add_transaction_page.dart';
-import '../overlay/presentation/pages/permissions_page.dart'; // AJOUTE CETTE LIGNE
+import '../overlay/presentation/pages/permissions_page.dart';
+import '../ai_assistant/presentation/widgets/sika_floating_button.dart';
 
 class MainNavigation extends ConsumerStatefulWidget {
   const MainNavigation({super.key});
@@ -27,7 +27,17 @@ class _MainNavigationState extends ConsumerState<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: Stack(
+        children: [
+          _pages[_selectedIndex],
+          // Bouton flottant Sika en bas à droite
+          const Positioned(
+            bottom: 90,
+            right: 16,
+            child: SikaFloatingButton(mini: true),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) {
@@ -258,9 +268,19 @@ class DashboardHome extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 24),
+
+            // Carte Sika - Assistant IA
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: ElevatedButton.icon(
+              child: const SikaCompactCard(),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Bouton paramètres
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: OutlinedButton.icon(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -269,11 +289,12 @@ class DashboardHome extends ConsumerWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.settings),
-                label: const Text('Activer les alertes intelligentes'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00A86B),
-                  minimumSize: const Size(double.infinity, 50),
+                icon: const Icon(Icons.settings_outlined),
+                label: const Text('Paramètres des alertes'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: const Color(0xFF00A86B),
+                  minimumSize: const Size(double.infinity, 45),
+                  side: const BorderSide(color: Color(0xFF00A86B)),
                 ),
               ),
             ),

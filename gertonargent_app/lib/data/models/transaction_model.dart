@@ -1,80 +1,111 @@
+﻿import 'budget_model.dart';
+
 enum TransactionType { income, expense }
 
-enum TransactionCategory {
-  alimentation,
-  transport,
-  logement,
-  sante,
-  education,
-  loisirs,
-  shopping,
-  autre,
-}
-
 class TransactionModel {
-  final String? id;
+  final int? id;
+  final int userId;
   final double amount;
+  final BudgetCategory category;
+  final String? description;
   final TransactionType type;
-  final TransactionCategory category;
-  final String description;
-  final DateTime date;
-  final String? userId;
+  final double? aiScore;
+  final String? aiRecommendation;
+  final bool wasApproved;
+  final DateTime createdAt;
 
   TransactionModel({
     this.id,
+    required this.userId,
     required this.amount,
-    required this.type,
     required this.category,
-    required this.description,
-    required this.date,
-    this.userId,
+    this.description,
+    required this.type,
+    this.aiScore,
+    this.aiRecommendation,
+    this.wasApproved = true,
+    required this.createdAt,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
-      id: json['id']?.toString(),
+      id: json['id'],
+      userId: json['user_id'] ?? 1,
       amount: (json['amount'] as num).toDouble(),
-      type: json['type'] == 'income'
+      category: BudgetCategory.values.firstWhere(
+        (e) => e.name == json['category'],
+        orElse: () => BudgetCategory.autre,
+      ),
+      description: json['description'],
+      type: json['transaction_type'] == 'income'
           ? TransactionType.income
           : TransactionType.expense,
-      category: TransactionCategory.values.firstWhere(
-        (e) => e.name == json['category'],
-        orElse: () => TransactionCategory.autre,
-      ),
-      description: json['description'] ?? '',
-      date: DateTime.parse(json['date']),
-      userId: json['user_id']?.toString(),
+      aiScore: (json['ai_score'] as num?)?.toDouble(),
+      aiRecommendation: json['ai_recommendation'],
+      wasApproved: json['was_approved'] ?? true,
+      createdAt: DateTime.parse(json['created_at']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'amount': amount,
-      'type': type.name,
       'category': category.name,
       'description': description,
-      'date': date.toIso8601String(),
+      'transaction_type': type.name,
     };
   }
 
-  String getCategoryIcon() {
-    switch (category) {
-      case TransactionCategory.alimentation:
-        return '🍽️';
-      case TransactionCategory.transport:
-        return '🚗';
-      case TransactionCategory.logement:
-        return '🏠';
-      case TransactionCategory.sante:
-        return '⚕️';
-      case TransactionCategory.education:
-        return '📚';
-      case TransactionCategory.loisirs:
-        return '🎮';
-      case TransactionCategory.shopping:
-        return '🛍️';
-      case TransactionCategory.autre:
-        return '📌';
+  String get categoryIcon => category.icon;
+  String get categoryName => category.displayName;
+
+  String get formattedAmount {
+    final prefix = type == TransactionType.expense ? '-' : '+';
+    return '$prefix${amount.toStringAsFixed(0)} FCFA';
+  }
+
+  String get formattedDate {
+    final now = DateTime.now();
+    final diff = now.difference(createdAt);
+
+    if (diff.inDays == 0) {
+      return "Aujourd'hui";
+    } else if (diff.inDays == 1) {
+      return 'Hier';
+    } else if (diff.inDays < 7) {
+      return 'Il y a ${diff.inDays} jours';
+    } else {
+      return '${createdAt.day}/${createdAt.month}/${createdAt.year}';
     }
+  }
+}
+
+class TransactionSummary {
+  final double totalExpenses;
+  final double totalIncome;
+  final double balance;
+  final int transactionCount;
+  final Map<String, double> byCategory;
+
+  TransactionSummary({
+    required this.totalExpenses,
+    required this.totalIncome,
+    required this.balance,
+    required this.transactionCount,
+    required this.byCategory,
+  });
+
+  factory TransactionSummary.fromJson(Map<String, dynamic> json) {
+    return TransactionSummary(
+      totalExpenses: (json['total_expenses'] as num).toDouble(),
+      totalIncome: (json['total_income'] as num).toDouble(),
+      balance: (json['balance'] as num).toDouble(),
+      transactionCount: json['transaction_count'] ?? 0,
+      byCategory: Map<String, double>.from(
+        (json['by_category'] as Map<String, dynamic>?)?.map(
+          (key, value) => MapEntry(key, (value as num).toDouble()),
+        ) ?? {},
+      ),
+    );
   }
 }

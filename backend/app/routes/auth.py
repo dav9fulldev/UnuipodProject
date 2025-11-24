@@ -68,6 +68,61 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Email ou mot de passe incorrect"
         )
-    
+
     access_token = create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+class UserResponse(BaseModel):
+    id: int
+    email: str
+    username: str
+    phone: str
+    is_active: bool
+
+    class Config:
+        from_attributes = True
+
+
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Token invalide ou expiré",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+
+    user = db.query(User).filter(User.email == email).first()
+    if user is None:
+        raise credentials_exception
+    return user
+
+
+@router.get("/me", response_model=UserResponse)
+def get_me(current_user: User = Depends(get_current_user)):
+    """Récupérer les informations de l'utilisateur connecté"""
+    return current_user
+
+
+@router.put("/me", response_model=UserResponse)
+def update_me(
+    username: str = None,
+    phone: str = None,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Mettre à jour le profil de l'utilisateur"""
+    if username:
+        current_user.username = username
+    if phone:
+        current_user.phone = phone
+
+    db.commit()
+    db.refresh(current_user)
+    return current_user

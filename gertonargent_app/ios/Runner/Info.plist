@@ -45,5 +45,16 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- Permissions for Sika voice assistant -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>GèrTonArgent a besoin d'accéder au microphone pour écouter vos commandes vocales.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>GèrTonArgent utilise la reconnaissance vocale pour convertir la parole en texte.</string>
+	<!-- Optionnel : autoriser l'audio en arrière-plan (attention aux règles App Store) -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 </dict>
 </plist>
