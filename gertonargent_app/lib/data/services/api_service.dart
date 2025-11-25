@@ -30,11 +30,13 @@ class ApiService {
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        debugPrint('RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
+        debugPrint(
+            'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
         return handler.next(response);
       },
       onError: (DioException e, handler) {
-        debugPrint('ERROR[${e.response?.statusCode}] => PATH: ${e.requestOptions.path}');
+        debugPrint(
+            'ERROR[${e.response?.statusCode}] => PATH: ${e.requestOptions.path}');
         debugPrint('ERROR MESSAGE: ${e.message}');
         return handler.next(e);
       },
@@ -72,6 +74,23 @@ class ApiService {
       final response = await _dio.post(
         ApiConstants.register,
         data: data,
+      );
+      if (response.data['access_token'] != null) {
+        setToken(response.data['access_token']);
+      }
+      return response.data;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  /// Register using a full payload map (useful for multi-step forms)
+  Future<Map<String, dynamic>> registerWithPayload(
+      Map<String, dynamic> payload) async {
+    try {
+      final response = await _dio.post(
+        ApiConstants.register,
+        data: payload,
       );
       if (response.data['access_token'] != null) {
         setToken(response.data['access_token']);
@@ -203,7 +222,8 @@ class ApiService {
         'offset': offset,
       };
       if (category != null) queryParams['category'] = category;
-      if (transactionType != null) queryParams['transaction_type'] = transactionType;
+      if (transactionType != null)
+        queryParams['transaction_type'] = transactionType;
 
       final response = await _dio.get(
         ApiConstants.transactions,
@@ -303,7 +323,8 @@ class ApiService {
         'color': color,
       };
       if (description != null) data['description'] = description;
-      if (targetDate != null) data['target_date'] = targetDate.toIso8601String();
+      if (targetDate != null)
+        data['target_date'] = targetDate.toIso8601String();
 
       final response = await _dio.post(
         ApiConstants.goals,
@@ -333,7 +354,8 @@ class ApiService {
       if (description != null) data['description'] = description;
       if (targetAmount != null) data['target_amount'] = targetAmount;
       if (currentAmount != null) data['current_amount'] = currentAmount;
-      if (targetDate != null) data['target_date'] = targetDate.toIso8601String();
+      if (targetDate != null)
+        data['target_date'] = targetDate.toIso8601String();
       if (icon != null) data['icon'] = icon;
       if (color != null) data['color'] = color;
       if (isCompleted != null) data['is_completed'] = isCompleted;

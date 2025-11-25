@@ -1,6 +1,6 @@
 class ApiConstants {
   // Base URL - Modifier selon votre configuration
-  static const String baseUrl = 'http://192.168.75.46:8000';
+  static const String baseUrl = 'http://192.168.84.130:8000';
 
   // Auth endpoints
   static const String register = '/auth/register';

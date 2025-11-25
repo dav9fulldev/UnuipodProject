@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../core/constants/api_constants.dart';
 
 /// Simple UI widget that displays Sika status and listens for native commands.
-/// The actual continuous voice listening (Sika detection) is handled by SikaVoiceService.
+/// The actual continuous voice listening is handled by SikaVoiceService (runs in background).
 class SikaAssistant extends StatefulWidget {
   const SikaAssistant({Key? key}) : super(key: key);
 
@@ -16,7 +16,7 @@ class SikaAssistant extends StatefulWidget {
 }
 
 class _SikaAssistantState extends State<SikaAssistant> {
-  String _status = '🎤 Sika listening in background...';
+  String _status = 'Sika listening in background...';
   String _lastCommand = '';
   final FlutterTts _tts = FlutterTts();
 
@@ -24,17 +24,16 @@ class _SikaAssistantState extends State<SikaAssistant> {
   void initState() {
     super.initState();
     _initTts();
-    // Listen for native commands forwarded by MainActivity via MethodChannel
+    // Listen for native broadcasts forwarded by MainActivity
     const method = MethodChannel('com.gertonargent/sika');
     method.setMethodCallHandler((call) async {
       if (call.method == 'onSikaCommand') {
         final String cmd = call.arguments ?? '';
         if (cmd.isNotEmpty) {
-          debugPrint('✅ Received native Sika command: $cmd');
+          debugPrint('Received native Sika command: $cmd');
           await _processCommand(cmd);
         }
       }
-      return null;
     });
   }
 
@@ -46,13 +45,12 @@ class _SikaAssistantState extends State<SikaAssistant> {
   }
 
   Future<void> _processCommand(String command) async {
-    setState(() => _status = '⚙️ Processing: $command');
+    setState(() => _status = 'Processing: $command');
     setState(() => _lastCommand = command);
 
-    debugPrint('Command received: $command');
+    debugPrint('Command: $command');
     await _speak("J'ai entendu: $command");
 
-    // Try to parse as expense command
     final parsed = _parseAddExpense(command);
     if (parsed != null) {
       final amount = parsed['amount'] as double;
@@ -63,32 +61,28 @@ class _SikaAssistantState extends State<SikaAssistant> {
           amount, category ?? 'autre', description);
       if (success) {
         await _speak('Dépense de ${amount.toStringAsFixed(0)} FCFA ajoutée.');
-        setState(() => _status = '✅ Expense saved');
+        setState(() => _status = 'Expense saved ✓');
       } else {
         await _speak('Impossible d\'enregistrer la dépense maintenant.');
-        setState(() => _status = '❌ Error saving expense');
+        setState(() => _status = 'Error saving expense');
       }
       return;
     }
 
-    // Try balance check
     if (command.toLowerCase().contains('solde') ||
         command.toLowerCase().contains('reste')) {
       await _speak('Votre solde restant est de 120 000 FCFA.');
-      setState(() => _status = '💰 Balance check');
+      setState(() => _status = 'Balance check');
       return;
     }
 
-    // Command not understood
-    await _speak('Désolé, je n\'ai pas compris. Pouvez-vous répéter ?');
-    setState(() => _status = '❓ Command not understood');
+    await _speak('Désolé, je n\'ai pas compris. Pouvez‑vous répéter ?');
+    setState(() => _status = 'Command not understood');
   }
 
-  /// Parse expense command like "ajoute une dépense de 5000 FCFA pour taxi"
   Map<String, dynamic>? _parseAddExpense(String text) {
     final t = text.toLowerCase();
 
-    // Check if this is an expense command
     final triggers = [
       'ajoute',
       'ajouter',
@@ -101,13 +95,11 @@ class _SikaAssistantState extends State<SikaAssistant> {
       'payer',
       'payé'
     ];
-
     final containsTrigger = triggers.any((w) => t.contains(w));
     if (!containsTrigger && !t.contains('dépense')) {
       return null;
     }
 
-    // Extract amount
     final amountRegex = RegExp(
         r'(\d{2,}(?:[ ,.]?\d{3})*|\d+)\s*(fcfa|f|francs?)?',
         caseSensitive: false);
@@ -118,20 +110,17 @@ class _SikaAssistantState extends State<SikaAssistant> {
       amount = double.tryParse(raw);
     }
 
-    if (amount == null) {
-      return null;
-    }
+    if (amount == null) return null;
 
-    // Extract category
     final categories = [
       'alimentation',
       'transport',
       'logement',
       'santé',
-      'éducation',
+      'education',
       'loisirs',
       'épargne',
-      'vêtements',
+      'vetements',
       'communication',
       'taxi',
       'restaurant'
@@ -144,7 +133,6 @@ class _SikaAssistantState extends State<SikaAssistant> {
       }
     }
 
-    // Extract description (text after "pour", "à", etc.)
     String? description;
     final descRegex = RegExp(r'(?:pour|à|au|aux)\s+([a-z0-9éèêàâ_\- ]{3,})',
         caseSensitive: false);
@@ -156,7 +144,6 @@ class _SikaAssistantState extends State<SikaAssistant> {
     return {'amount': amount, 'category': category, 'description': description};
   }
 
-  /// Send transaction to backend
   Future<bool> _sendTransactionToBackend(
       double amount, String category, String? description) async {
     try {
@@ -167,26 +154,18 @@ class _SikaAssistantState extends State<SikaAssistant> {
         'description': description ?? '',
         'transaction_type': 'expense',
       });
-      debugPrint('Sending transaction: $body');
-      final resp = await http
-          .post(url, headers: {'Content-Type': 'application/json'}, body: body)
-          .timeout(const Duration(seconds: 10));
-      debugPrint('Backend response: ${resp.statusCode}');
+      final resp = await http.post(url,
+          headers: {'Content-Type': 'application/json'}, body: body);
       return resp.statusCode == 200 || resp.statusCode == 201;
     } catch (e) {
-      debugPrint('❌ Backend error: $e');
+      debugPrint('Backend error: $e');
       return false;
     }
   }
 
-  /// Speak text using TTS
   Future<void> _speak(String text) async {
-    try {
-      await _tts.stop();
-      await _tts.speak(text);
-    } catch (e) {
-      debugPrint('TTS error: $e');
-    }
+    await _tts.stop();
+    await _tts.speak(text);
   }
 
   @override
@@ -204,25 +183,19 @@ class _SikaAssistantState extends State<SikaAssistant> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Sika Assistant',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            const Text('Sika Assistant',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Text(
-              'Status: $_status',
-              style: const TextStyle(fontSize: 14, color: Colors.green),
-            ),
+            Text('Status: $_status',
+                style: const TextStyle(fontSize: 14, color: Colors.green)),
             if (_lastCommand.isNotEmpty) ...[
               const SizedBox(height: 8),
-              Text(
-                'Last command: $_lastCommand',
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-              ),
+              Text('Last command: $_lastCommand',
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
             ],
             const SizedBox(height: 12),
             const Text(
-              '✅ Sika is always listening in the background.\nSay "Sika" followed by your command.',
+              'Sika is always listening in the background. Say "Sika" followed by your command.',
               style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
           ],

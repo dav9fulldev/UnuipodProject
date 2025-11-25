@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/onboarding_provider.dart';
+import '../../../../data/local/registration_cache.dart';
 
 class ProfessionStep extends ConsumerStatefulWidget {
   final VoidCallback onNext;
@@ -27,6 +28,7 @@ class _ProfessionStepState extends ConsumerState<ProfessionStep> {
     setState(() {
       _selectedProfession = value;
     });
+    RegistrationCache.saveStep('profession', value);
   }
 
   void _submit() {
@@ -47,6 +49,10 @@ class _ProfessionStepState extends ConsumerState<ProfessionStep> {
 
   @override
   Widget build(BuildContext context) {
+    // prefill
+    final cached = RegistrationCache.getStep<String>('profession');
+    if (cached != null && _selectedProfession == null)
+      _selectedProfession = cached;
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(

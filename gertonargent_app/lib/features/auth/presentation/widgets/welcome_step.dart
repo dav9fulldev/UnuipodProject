@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/onboarding_provider.dart';
+import '../../../../data/local/registration_cache.dart';
 import '../../providers/auth_provider.dart';
 import '../../../navigation/main_navigation.dart';
 
@@ -22,15 +23,40 @@ class WelcomeStep extends ConsumerWidget {
     );
 
     try {
-      // Enregistrer l'utilisateur avec toutes les données
-      await ref.read(authProvider.notifier).register(
-            email: onboardingData.email!,
-            password: onboardingData.password!,
-            firstName: onboardingData.firstName,
-            lastName: onboardingData.lastName,
-          );
+      // Gather cached registration data and merge with onboarding provider fields
+      final reg = RegistrationCache.all();
+      final email = reg['email']?.toString() ?? onboardingData.email!;
+      final password = reg['password']?.toString() ?? onboardingData.password!;
+      final firstName =
+          reg['firstName']?.toString() ?? onboardingData.firstName;
+      final lastName = reg['lastName']?.toString() ?? onboardingData.lastName;
 
-      // TODO: Envoyer les autres données (profession, revenus, objectifs, catégories) au backend
+      // Enregistrer l'utilisateur avec toutes les données via ApiService
+      final api = ref.read(apiServiceProvider);
+      final payload = {
+        'email': email,
+        'password': password,
+        'first_name': firstName,
+        'last_name': lastName,
+        // include extra profile fields if present in cache
+        'profession': reg['profession'],
+        'income_range': reg['incomeRange'],
+        'goals': reg['goals'],
+        'spending_categories': reg['categories'],
+      };
+
+      try {
+        await api.registerWithPayload(payload);
+        // after successful registration, login to obtain token and user
+        final logged = await ref
+            .read(authProvider.notifier)
+            .login(email: email, password: password);
+        if (logged) {
+          await RegistrationCache.clear();
+        }
+      } catch (e) {
+        throw e;
+      }
 
       // Fermer le loading
       if (context.mounted) {

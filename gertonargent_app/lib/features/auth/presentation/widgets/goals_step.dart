@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/onboarding_provider.dart';
+import '../../../../data/local/registration_cache.dart';
 
 class GoalsStep extends ConsumerStatefulWidget {
   final VoidCallback onNext;
@@ -31,8 +32,10 @@ class _GoalsStepState extends ConsumerState<GoalsStep> {
     setState(() {
       if (_selectedGoals.contains(value)) {
         _selectedGoals.remove(value);
+        RegistrationCache.saveStep('goals', _selectedGoals.toList());
       } else {
         _selectedGoals.add(value);
+        RegistrationCache.saveStep('goals', _selectedGoals.toList());
       }
     });
   }
@@ -55,6 +58,10 @@ class _GoalsStepState extends ConsumerState<GoalsStep> {
 
   @override
   Widget build(BuildContext context) {
+    // prefill
+    final cached = RegistrationCache.getStep<List>('goals');
+    if (cached != null && _selectedGoals.isEmpty)
+      _selectedGoals.addAll(cached.cast<String>());
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(

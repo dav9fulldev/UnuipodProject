@@ -142,10 +142,65 @@
 
       private fun process(cmd: String) {
           val l = cmd.lowercase()
-          val resp = when { l.contains("bonjour") -> "Bonjour!"; l.contains("fermer") -> { handler.postDelayed({ hideOverlay(); stopSelf() }, 1500); "Au revoir!" }; else -> { sendToFlutter(cmd);
-  "Traitement..." } }
-          upStatus(resp); speak(resp)
-          if (!l.contains("fermer")) handler.postDelayed({ restart() }, 3000)
+              // detect expense phrases like "ajoute une dépense de 12 euros pour taxi"
+              val resp = when {
+                  l.contains("bonjour") -> "Bonjour!"
+                  l.contains("fermer") -> { handler.postDelayed({ hideOverlay(); stopSelf() }, 1500); "Au revoir!" }
+                  l.contains("ajoute") && (l.contains("dépense") || l.contains("depense")) -> {
+                      val parsed = parseExpense(l)
+                      if (parsed != null) {
+                          savePendingTransaction(parsed.first, parsed.second)
+                          "Dépense enregistrée: ${parsed.first}€ pour ${parsed.second}"
+                      } else {
+                          sendToFlutter(cmd)
+                          "Je n'ai pas compris le montant. Peux-tu répéter ?"
+                      }
+                  }
+                  else -> { sendToFlutter(cmd); "Traitement..." }
+              }
+              upStatus(resp); speak(resp)
+              if (!l.contains("fermer")) handler.postDelayed({ restart() }, 3000)
+      }
+
+      private fun parseExpense(cmd: String): Pair<Double, String>? {
+          try {
+              // amount detection
+              val amountRegex = Regex("([0-9]+(?:[.,][0-9]+)?)\\s*(?:€|euros?)")
+              val amountMatch = amountRegex.find(cmd)
+              if (amountMatch != null) {
+                  var amountStr = amountMatch.groupValues[1].replace(',', '.')
+                  val amount = amountStr.toDoubleOrNull() ?: return null
+
+                  // description after 'pour' or after the amount
+                  val pourRegex = Regex("pour\\s+([\\w\\sàéèêëîïôöùûç-]+)")
+                  val pourMatch = pourRegex.find(cmd)
+                  val description = when {
+                      pourMatch != null -> pourMatch.groupValues[1].trim()
+                      else -> {
+                          // try to take words following the amount
+                          val after = cmd.substring(amountMatch.range.last + 1).trim()
+                          if (after.isNotEmpty()) after.split(" ").take(6).joinToString(" ") else "Dépense"
+                      }
+                  }
+                  return Pair(amount, description)
+              }
+          } catch (e: Exception) { Log.e(TAG, "parseExpense error", e) }
+          return null
+      }
+
+      private fun savePendingTransaction(amount: Double, description: String) {
+          try {
+              val prefs = getSharedPreferences("sika_prefs", Context.MODE_PRIVATE)
+              val existing = prefs.getString("pending_transactions", "[]") ?: "[]"
+              val arr = org.json.JSONArray(existing)
+              val obj = org.json.JSONObject()
+              obj.put("amount", amount)
+              obj.put("description", description)
+              obj.put("created_at", System.currentTimeMillis())
+              arr.put(obj)
+              prefs.edit().putString("pending_transactions", arr.toString()).apply()
+              Log.d(TAG, "Saved pending transaction: $amount € - $description")
+          } catch (e: Exception) { Log.e(TAG, "savePendingTransaction error", e) }
       }
 
       private fun sendToFlutter(cmd: String) { sendBroadcast(Intent("com.gertonargent.SIKA_COMMAND").putExtra("command", cmd)) }

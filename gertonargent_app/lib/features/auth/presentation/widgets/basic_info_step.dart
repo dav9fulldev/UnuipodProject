@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/onboarding_provider.dart';
+import '../../../../data/local/registration_cache.dart';
 
 class BasicInfoStep extends ConsumerStatefulWidget {
   final VoidCallback onNext;
@@ -26,6 +27,30 @@ class _BasicInfoStepState extends ConsumerState<BasicInfoStep> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Prefill from cache if available
+    final fn = RegistrationCache.getStep<String>('firstName');
+    final ln = RegistrationCache.getStep<String>('lastName');
+    final em = RegistrationCache.getStep<String>('email');
+    final pw = RegistrationCache.getStep<String>('password');
+    if (fn != null) _firstNameController.text = fn;
+    if (ln != null) _lastNameController.text = ln;
+    if (em != null) _emailController.text = em;
+    if (pw != null) _passwordController.text = pw;
+
+    // autosave on change
+    _firstNameController.addListener(() =>
+        RegistrationCache.saveStep('firstName', _firstNameController.text));
+    _lastNameController.addListener(
+        () => RegistrationCache.saveStep('lastName', _lastNameController.text));
+    _emailController.addListener(
+        () => RegistrationCache.saveStep('email', _emailController.text));
+    _passwordController.addListener(
+        () => RegistrationCache.saveStep('password', _passwordController.text));
   }
 
   void _submit() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/onboarding_provider.dart';
+import '../../../../data/local/registration_cache.dart';
 
 class CategoriesStep extends ConsumerStatefulWidget {
   final VoidCallback onNext;
@@ -57,8 +58,10 @@ class _CategoriesStepState extends ConsumerState<CategoriesStep> {
     setState(() {
       if (_selectedCategories.contains(value)) {
         _selectedCategories.remove(value);
+        RegistrationCache.saveStep('categories', _selectedCategories.toList());
       } else {
         _selectedCategories.add(value);
+        RegistrationCache.saveStep('categories', _selectedCategories.toList());
       }
     });
   }
@@ -81,6 +84,10 @@ class _CategoriesStepState extends ConsumerState<CategoriesStep> {
 
   @override
   Widget build(BuildContext context) {
+    // prefill
+    final cached = RegistrationCache.getStep<List>('categories');
+    if (cached != null && _selectedCategories.isEmpty)
+      _selectedCategories.addAll(cached.cast<String>());
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
