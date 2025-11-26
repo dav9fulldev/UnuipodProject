@@ -85,7 +85,7 @@ class _CategoriesStepState extends ConsumerState<CategoriesStep> {
   @override
   Widget build(BuildContext context) {
     // prefill
-    final cached = RegistrationCache.getStep<List>('categories');
+    final cached = RegistrationCache.getStepAs<List>('categories');
     if (cached != null && _selectedCategories.isEmpty)
       _selectedCategories.addAll(cached.cast<String>());
     return Padding(

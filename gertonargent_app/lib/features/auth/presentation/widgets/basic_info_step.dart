@@ -33,10 +33,10 @@ class _BasicInfoStepState extends ConsumerState<BasicInfoStep> {
   void initState() {
     super.initState();
     // Prefill from cache if available
-    final fn = RegistrationCache.getStep<String>('firstName');
-    final ln = RegistrationCache.getStep<String>('lastName');
-    final em = RegistrationCache.getStep<String>('email');
-    final pw = RegistrationCache.getStep<String>('password');
+    final fn = RegistrationCache.getStepAs<String>('firstName');
+    final ln = RegistrationCache.getStepAs<String>('lastName');
+    final em = RegistrationCache.getStepAs<String>('email');
+    final pw = RegistrationCache.getStepAs<String>('password');
     if (fn != null) _firstNameController.text = fn;
     if (ln != null) _lastNameController.text = ln;
     if (em != null) _emailController.text = em;

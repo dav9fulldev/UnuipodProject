@@ -45,7 +45,7 @@ class SikaWakeWordService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "Service cree")
+        Log.d(TAG, "======== SikaWakeWordService.onCreate() called ========")
         createNotificationChannel()
     }
 
@@ -58,8 +58,14 @@ class SikaWakeWordService : Service() {
             }
             else -> {
                 startForeground(NOTIFICATION_ID, createNotification())
-                isRunning = true
-                initializeVosk()
+                // Only initialize if not already running
+                if (!isRunning) {
+                    Log.d(TAG, "Starting service for the first time")
+                    isRunning = true
+                    initializeVosk()
+                } else {
+                    Log.d(TAG, "Service already running, ignoring duplicate start request")
+                }
             }
         }
         return START_STICKY
@@ -102,16 +108,45 @@ class SikaWakeWordService : Service() {
     }
 
     private fun initializeVosk() {
+        Log.d(TAG, "Starting Vosk initialization in background thread...")
         Thread {
             try {
+                Log.d(TAG, "Background thread: Initializing Vosk model...")
                 val modelDir = File(filesDir, "vosk-model-small-fr")
-                if (!modelDir.exists()) copyAssetFolder("vosk-model-small-fr", modelDir.absolutePath)
+                Log.d(TAG, "Model dir: ${modelDir.absolutePath}")
+                
+                if (!modelDir.exists()) {
+                    Log.d(TAG, "Model not found, copying from assets...")
+                    if (!copyAssetFolder("vosk-model-small-fr", modelDir.absolutePath)) {
+                        Log.e(TAG, "Failed to copy model from assets")
+                        startSimpleWakeWordDetection()
+                        return@Thread
+                    }
+                    Log.d(TAG, "Model copied successfully from assets")
+                }
+                
+                val files = modelDir.listFiles()
+                Log.d(TAG, "Model files found: ${files?.size} items")
+                
                 if (modelDir.exists() && modelDir.listFiles()?.isNotEmpty() == true) {
-                    model = Model(modelDir.absolutePath)
-                    recognizer = Recognizer(model, SAMPLE_RATE.toFloat())
-                    startListening()
-                } else { startSimpleWakeWordDetection() }
-            } catch (e: Exception) { startSimpleWakeWordDetection() }
+                    Log.d(TAG, "Loading Vosk model from: ${modelDir.absolutePath}")
+                    try {
+                        model = Model(modelDir.absolutePath)
+                        recognizer = Recognizer(model, SAMPLE_RATE.toFloat())
+                        Log.d(TAG, "✅ Vosk initialized successfully, starting listening")
+                        startListening()
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Failed to load Vosk model: ${e.message}", e)
+                        startSimpleWakeWordDetection()
+                    }
+                } else { 
+                    Log.w(TAG, "Model directory is empty or does not exist: ${modelDir.absolutePath}")
+                    startSimpleWakeWordDetection()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Fatal error in initializeVosk: ${e.message}", e)
+                startSimpleWakeWordDetection()
+            }
         }.start()
     }
 
@@ -130,14 +165,23 @@ class SikaWakeWordService : Service() {
     private fun startListening() {
         if (isListening) return
         try {
+            Log.d(TAG, "Starting listening for wake-word...")
             val bs = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2
             audioRecord = AudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bs)
-            if (audioRecord?.state != AudioRecord.STATE_INITIALIZED) return
+            
+            if (audioRecord?.state != AudioRecord.STATE_INITIALIZED) {
+                Log.e(TAG, "AudioRecord not initialized")
+                return
+            }
+            
             audioRecord?.startRecording()
             isListening = true
+            Log.d(TAG, "✅ Listening started, bufferSize=$bs")
             recognitionThread = Thread { recognizeLoop(bs) }
             recognitionThread?.start()
-        } catch (e: Exception) { }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting listening: ${e.message}", e)
+        }
     }
 
     private fun recognizeLoop(bufferSize: Int) {
@@ -179,7 +223,66 @@ class SikaWakeWordService : Service() {
         } catch (e: Exception) { }
     }
 
-    private fun startSimpleWakeWordDetection() { Log.d(TAG, "Detection simple") }
+    private fun startSimpleWakeWordDetection() {
+        Log.w(TAG, "⚠️ Vosk not available, using simple wake-word detection fallback")
+        if (isListening) return
+        
+        try {
+            val bs = AudioRecord.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT) * 2
+            audioRecord = AudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bs)
+            
+            if (audioRecord?.state != AudioRecord.STATE_INITIALIZED) {
+                Log.e(TAG, "AudioRecord initialization failed for simple detection")
+                return
+            }
+            
+            audioRecord?.startRecording()
+            isListening = true
+            Log.d(TAG, "Simple wake-word detection started, bufferSize=$bs")
+            
+            recognitionThread = Thread { simpleWakeWordLoop(bs) }
+            recognitionThread?.start()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error starting simple detection: ${e.message}", e)
+        }
+    }
+    
+    private fun simpleWakeWordLoop(bufferSize: Int) {
+        val buffer = ByteArray(bufferSize)
+        var loudnessCount = 0
+        
+        while (isListening && !Thread.interrupted()) {
+            try {
+                val read = audioRecord?.read(buffer, 0, buffer.size) ?: 0
+                if (read > 0) {
+                    // Simple loudness detection: count samples with significant amplitude
+                    var loudSamples = 0
+                    for (i in 0 until read step 2) {
+                        if (i + 1 < read) {
+                            val sample = ((buffer[i].toInt() and 0xFF) or ((buffer[i + 1].toInt() and 0xFF) shl 8)).toShort()
+                            if (Math.abs(sample) > 2000) loudSamples++
+                        }
+                    }
+                    
+                    // If >50% of samples are loud, increment counter
+                    if (loudSamples > read / 4) {
+                        loudnessCount++
+                    } else {
+                        loudnessCount = 0
+                    }
+                    
+                    // If loud for 0.5 seconds (~8 frames at 16khz), treat as wake-word
+                    if (loudnessCount > 5) {
+                        Log.d(TAG, "Simple detection: Loud sound detected, treating as 'Sika'")
+                        onWakeWordDetected()
+                        loudnessCount = 0
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error in simple loop: ${e.message}")
+            }
+        }
+    }
 
     private fun stopListening() {
         isListening = false

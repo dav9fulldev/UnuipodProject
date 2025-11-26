@@ -8,6 +8,68 @@
 [![License](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
 
 ---
+
+## 📊 Présentation Investisseurs (26 Nov 2025)
+
+Préparation complète d'une présentation PowerPoint professionnelle pour investisseurs internationaux.
+
+### 📋 Contenu de la Présentation (10 Slides)
+
+| Slide | Titre | Focus | Durée |
+|-------|-------|-------|-------|
+| 1 | **Couverture** | Hook investisseur | 1 min |
+| 2 | **L'Entreprise** | Crédibilité, vision panafricaine | 1.5 min |
+| 3 | **Le Problème** | 400M Africains endettés sans prévention | 2 min |
+| 4 | **Notre Solution** | SIKA + prévention proactive + privacy | 2.5 min |
+| 5 | **Proposition de Valeur** | Économies 35%, conscience financière | 1.5 min |
+| 6 | **Opportunité Marché** | TAM $8.5B, SAM $150M, SOM $500K | 2 min |
+| 7 | **Business Model** | Freemium $2/mois + partenariats | 2 min |
+| 8 | **Comment Ça Marche** | Stack tech: Vosk → STT → IA → TTS | 2 min |
+| 9 | **Concurrence** | Nala, PalmPay vs GèrTonArgent (clear winner) | 2 min |
+| 10 | **Objectifs & Fonds** | Y1: 50K users, Y2: break-even, $500K allocation | 2.5 min |
+
+### 🎯 Points Clés
+
+✨ **Unique Selling Points**:
+- SEULE app avec **prévention PROACTIVE** des dépenses (avant la transaction)
+- SEULE avec **assistant vocal offline** (Vosk, fonctionne sans connexion)
+- **100% confidentiel** - zéro données partagées avec tiers
+- Marché **non-compétitif** en Côte d'Ivoire/Afrique de l'Ouest
+- **Path to profitability clair** (break-even month 14-18)
+
+💡 **Chiffres Clés**:
+- **TAM**: $8.5B (fintech africaine 2027)
+- **CAC**: $0.50 (très bas via viral)
+- **LTV**: $25 (ratio 50:1 excellent)
+- **CAGR**: 120% (croissance forte)
+- **Y1 Revenue**: $300K (50K users × $72 ARPU)
+- **Y2 Revenue**: $1.5M (250K users, break-even)
+- **Y3 Revenue**: $3.5M (500K users)
+
+---
+
+## 🔧 Mises à jour récentes (25 Nov 2025)
+
+Cette section liste les corrections récentes effectuées dans le code (utile quand l'IDE affiche certains fichiers en "rouge").
+
+- **Appels RegistrationCache** : remplacement des appels `RegistrationCache.getStep<T>(...)` par `RegistrationCache.getStepAs<T>(...)` dans les widgets d'onboarding.
+- **UserModel** : ajout de `firstName` (optionnel) dans `lib/data/models/user_model.dart` (constructeur, `fromJson`, `toJson`, `copyWith`).
+- **ApiService** : ajout du getter `hasToken` dans `lib/data/services/api_service.dart` pour vérifier rapidement la présence du token.
+- **SikaSync** : adaptation de `lib/services/sika_sync.dart` pour l'API de `ApiService` — passage des paramètres nommés `amount`/`category`/`description` et vérification de la présence d'un `id` dans la Map de réponse.
+- **Imports** : correction des chemins d'import (vers `data/services/api_service.dart`) et suppression d'un import inutilisé dans `lib/main.dart`.
+
+Pour vérifier localement :
+
+```powershell
+cd "c:\MON DISQUE AVANT\Disque D\Gertonargent\Gertonargent_v2\gertonargent_app"
+flutter pub get
+flutter analyze
+```
+
+Si `flutter analyze` retourne encore des erreurs, copie la sortie ici et je m'en occupe.
+
+---
+
 ## 🎤 **NOUVEAUTÉ : Assistant Vocal "SIKA"** - Implémenté!
 
 ### L'Innovation Qui Change Tout

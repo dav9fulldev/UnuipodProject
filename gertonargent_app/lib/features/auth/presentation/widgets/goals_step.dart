@@ -59,7 +59,7 @@ class _GoalsStepState extends ConsumerState<GoalsStep> {
   @override
   Widget build(BuildContext context) {
     // prefill
-    final cached = RegistrationCache.getStep<List>('goals');
+    final cached = RegistrationCache.getStepAs<List>('goals');
     if (cached != null && _selectedGoals.isEmpty)
       _selectedGoals.addAll(cached.cast<String>());
     return Padding(

@@ -47,6 +47,9 @@ class ApiService {
     _token = token;
   }
 
+  /// Indique si un token est présent (utilisé pour des vérifications simples)
+  bool get hasToken => _token != null;
+
   void setUserId(int userId) {
     _userId = userId;
   }

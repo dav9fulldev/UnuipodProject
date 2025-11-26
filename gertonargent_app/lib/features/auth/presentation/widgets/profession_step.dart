@@ -50,7 +50,7 @@ class _ProfessionStepState extends ConsumerState<ProfessionStep> {
   @override
   Widget build(BuildContext context) {
     // prefill
-    final cached = RegistrationCache.getStep<String>('profession');
+    final cached = RegistrationCache.getStepAs<String>('profession');
     if (cached != null && _selectedProfession == null)
       _selectedProfession = cached;
     return Padding(
